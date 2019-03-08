@@ -16,20 +16,23 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from api.resources import AdsResource
-#from api.resources import CategoryResource
-#from api.resources import ProductResource
-#from api.resources import FavouriteResource
+from api.resources import UserResource
+from api.resources import CategoryResource
+from api.resources import ProductResource
+from api.resources import FavouriteResource
 from django.conf.urls import url, include
 
 ads_resource = AdsResource()
-#category_resource = CategoryResource()
-#product_resource = ProductResource()
-#favourite_resource = FavouriteResource()
+category_resource = CategoryResource()
+user_resource = UserResource()
+product_resource = ProductResource()
+favourite_resource = FavouriteResource()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^api/', include(ads_resource.urls)),
-    #url(r'^api/', include(category_resource.urls)),
-    #url(r'^api/', include(product_resource.urls)),
-    #url(r'^api/', include(favourite_resource.urls)),
+    url(r'^api/', include(user_resource.urls)),
+    url(r'^api/', include(category_resource.urls)),
+    url(r'^api/', include(product_resource.urls)),
+    url(r'^api/', include(favourite_resource.urls)),
 ]
