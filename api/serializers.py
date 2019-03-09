@@ -2,13 +2,13 @@
 
 from api.models import Ads
 from api.models import Product
-from snippets.models import Snippet, LANGUAGE_CHOICES, STYLE_CHOICES
+from rest_framework import serializers
         
 class AdSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ads
-        fields = ('category', 'subcategories', 'city',
+        fields = ('id','user_id','category', 'subcategories', 'city',
                   'address', 'title', 'description', 'price', 'negotiable',
                   'new', 'used', 'contact', 'image')
         

@@ -10,7 +10,7 @@ class User(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Ads(models.Model):
-    userId=models.CharField(max_length=200)
+    user_id=models.CharField(max_length=20)
     category = models.CharField(max_length=200)
     subcategories = models.CharField(max_length=1000)
     city = models.CharField(max_length=200)
@@ -45,6 +45,6 @@ class Category(models.Model):
     subcategories = models.CharField(max_length=1000)
 
 class Favourite(models.Model):
-    userId=models.CharField(max_length=200)
-    productID = models.CharField(max_length=1000)
+    userid=models.CharField(max_length=200)
+    productiD = models.CharField(max_length=1000)
 
