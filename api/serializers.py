@@ -2,6 +2,8 @@
 
 from api.models import Ads
 from api.models import Product
+from api.models import Favourite
+from api.models import User
 from rest_framework import serializers
         
 class AdSerializer(serializers.ModelSerializer):
@@ -16,8 +18,21 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('category', 'subcategories', 'city',
+        fields = ('id','category', 'subcategories', 'city',
                   'address', 'title', 'description', 'price', 'negotiable',
                   'new', 'used', 'contact', 'image')
+
+class FavouriteSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Favourite
+        fields = ('id','userid','productid')
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('id','user_id','username','email','usertype','loggedin')
 
 

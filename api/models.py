@@ -3,10 +3,11 @@ from django.db import models
 # Create your models here.
 
 class User(models.Model):
-    userId=models.CharField(max_length=200)
-    userName=models.CharField(max_length=200)
+    user_id=models.CharField(max_length=200)
+    username=models.CharField(max_length=200)
     email=models.CharField(max_length=200)
     usertype=models.CharField(max_length=20)
+    loggedin=models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Ads(models.Model):
@@ -46,5 +47,5 @@ class Category(models.Model):
 
 class Favourite(models.Model):
     userid=models.CharField(max_length=200)
-    productiD = models.CharField(max_length=1000)
+    productid = models.CharField(max_length=1000)
 
