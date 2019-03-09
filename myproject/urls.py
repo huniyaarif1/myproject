@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from api.views import AdDetail
+from api.views import ProductFilterDetail
+from api.views import ProductSearch
 from api.resources import AdsResource
 from api.resources import UserResource
 from api.resources import CategoryResource
@@ -32,6 +34,8 @@ favourite_resource = FavouriteResource()
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^api/ads/get', AdDetail.as_view()),
+    url(r'^api/product/filter', ProductFilterDetail.as_view()),
+    url(r'^api/product/find', ProductSearch.as_view()),
     url(r'^api/', include(ads_resource.urls)),
     url(r'^api/', include(user_resource.urls)),
     url(r'^api/', include(category_resource.urls)),

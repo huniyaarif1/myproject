@@ -24,12 +24,28 @@ class AdDetail(generics.ListAPIView):
             queryset = self.queryset.filter(user_id=userid)
         return queryset
 
-class ProductDetail(generics.RetrieveAPIView):
+class ProductFilterDetail(generics.ListAPIView):
+
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
-    def get(self, reques):
+    def get_queryset(self):
         """
-        This view should return a list of all the purchases
-        for the currently authenticated user.
-        """
-        queryset = Product.objects.all()
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """        
+        cat = self.request.query_params.get('cat', None)
+        scat = self.request.query_params.get('scat', None)
+        if cat:
+            queryset = self.queryset.filter(category=cat)
+            if scat:
+                queryset = queryset.filter(subcategories=scat)
+            
+        return queryset
+
+class ProductSearch(generics.ListAPIView):
+    
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('title',)
