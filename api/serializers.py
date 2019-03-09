@@ -26,7 +26,7 @@ class FavouriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Favourite
-        fields = ('id','userid','productid')
+        fields = ('id','user_id','product_id')
 
 
 class UserSerializer(serializers.ModelSerializer):

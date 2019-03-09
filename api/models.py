@@ -46,6 +46,6 @@ class Category(models.Model):
     subcategories = models.CharField(max_length=1000)
 
 class Favourite(models.Model):
-    userid=models.CharField(max_length=200)
-    productid = models.CharField(max_length=1000)
+    user_id=models.CharField(max_length=200)
+    product_id = models.CharField(max_length=1000)
 
