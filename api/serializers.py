@@ -7,12 +7,12 @@ from api.models import User
 from rest_framework import serializers
         
 class AdSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Ads
         fields = ('id','user_id','category', 'subcategories', 'city',
                   'address', 'title', 'description', 'price', 'negotiable',
                   'new', 'used', 'contact', 'image')
+
         
 class ProductSerializer(serializers.ModelSerializer):
 
@@ -21,7 +21,7 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ('id','category', 'subcategories', 'city',
                   'address', 'title', 'description', 'price', 'negotiable',
                   'new', 'used', 'contact', 'image')
-
+    
 class FavouriteSerializer(serializers.ModelSerializer):
 
     class Meta:
