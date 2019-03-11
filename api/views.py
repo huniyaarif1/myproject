@@ -53,11 +53,12 @@ class ProductFilterDetail(generics.ListAPIView):
         """        
         cat = self.request.query_params.get('cat', None)
         scat = self.request.query_params.get('scat', None)
+        queryset = Product.objects.all()
         if cat:
-            queryset = self.queryset.filter(category=cat)
+            if cat:
+                queryset = self.queryset.filter(category=cat)
             if scat:
-                queryset = queryset.filter(subcategories=scat)
-            
+                queryset = queryset.filter(subcategories=scat)       
         return queryset
 
 class ProductSearch(generics.ListAPIView):

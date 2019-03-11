@@ -41,6 +41,5 @@ urlpatterns = [
     url(r'^api/', include(ads_resource.urls)),
     url(r'^api/', include(user_resource.urls)),
     url(r'^api/', include(category_resource.urls)),
-    url(r'^api/', include(product_resource.urls)),
     url(r'^api/', include(favourite_resource.urls)),
 ]
