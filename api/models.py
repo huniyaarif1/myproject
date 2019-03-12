@@ -43,9 +43,14 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     image = models.CharField(max_length=200)#models.ImageField(max_length=None, allow_empty_file=False, use_url=True)
 
-class CategoryInfo(models.Model):
-    category = models.CharField(max_length=200)
-    subcategory = models.CharField(max_length=1000)
+class Item(models.Model):
+    cID = models.CharField(primary_key=True, max_length= 50, null=False)
+    category = models.CharField(max_length=50)
+    image=models.URLField(max_length=250)
+
+class Category(models.Model):
+    cID = models.ForeignKey(Item, related_name='subcategories', to_field='cID', on_delete = models.CASCADE)
+    subcategory = models.CharField(max_length=13)
 
 class Favourite(models.Model):
     user_ID=models.CharField(max_length=200)

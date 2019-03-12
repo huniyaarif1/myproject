@@ -3,11 +3,13 @@ from api.models import Ads
 from api.models import Product
 from api.models import Favourite
 from api.models import UserData
-from api.models import CategoryInfo
+from api.models import Category
+from api.models import Item
 from rest_framework import generics
 from rest_framework import filters
 from rest_framework.response import Response
 from api.serializers import AdSerializer
+from api.serializers import ItemSerializer
 from api.serializers import CategorySerializer
 from api.serializers import ProductSerializer
 from api.serializers import FavouriteSerializer
@@ -37,7 +39,10 @@ class AdDetail(generics.ListAPIView):
         serializer = AdSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            response_data={}
+            response_data["success"] = "True"
+            response_data["message"] = "Settings created successfully."
+            return Response(response_data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
@@ -53,28 +58,34 @@ class AdDetail(generics.ListAPIView):
         # validate and update
         if serializer.is_valid():
             serializer.save()
-            serializer_dict = serializer.data
-            serializer_dict["message"] = "Settings updated successfully."
-            return Response(serializer_dict, status=status.HTTP_200_OK)
+            response_data={}
+            response_data["success"] = "True"
+            response_data["message"] = "Settings updated successfully."
+            return Response(response_data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
 
 class CategoryDetail(generics.ListAPIView):
-    serializer_class = CategorySerializer
+    serializer_class = ItemSerializer
+    queryset = Item.objects.all()
     
-    def get(self, request):
-        cat = CategoryInfo.objects.all()
-        serializer = CategorySerializer(cat, many=True)
-        return Response(serializer.data)
+    def get_queryset(self):
+        queryset = Item.objects.all()
+        #serializer = CategorySerializer(queryset, many=True)
+        #data = serializer.data
+        return queryset
     
     def post(self,request):
-        serializer = CategorySerializer(data=request.data)
+        serializer = ItemSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-   
+            response_data={}
+            response_data["success"] = "True"
+            response_data["message"] = "Settings updated successfully."
+            return Response(response_data, status=status.HTTP_200_OK)
+        return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
 
 class UserDetail(generics.ListAPIView):
 
@@ -95,7 +106,10 @@ class UserDetail(generics.ListAPIView):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            response_data={}
+            response_data["success"] = "True"
+            response_data["message"] = "Settings created successfully."
+            return Response(response_data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class FavouriteDetail(generics.ListAPIView):
@@ -117,7 +131,10 @@ class FavouriteDetail(generics.ListAPIView):
         serializer = FavouriteSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            response_data={}
+            response_data["success"] = "True"
+            response_data["message"] = "Settings created successfully."
+            return Response(response_data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
