@@ -2,8 +2,8 @@ from django.db import models
 
 # Create your models here.
 
-class User(models.Model):
-    user_id=models.CharField(max_length=200)
+class UserData(models.Model):
+    user_ID=models.CharField(max_length=200, unique=True)
     username=models.CharField(max_length=200)
     email=models.CharField(max_length=200)
     usertype=models.CharField(max_length=20)
@@ -11,7 +11,7 @@ class User(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Ads(models.Model):
-    user_id=models.CharField(max_length=20)
+    user_ID=models.CharField(max_length=200)
     category = models.CharField(max_length=200)
     subcategories = models.CharField(max_length=1000)
     city = models.CharField(max_length=200)
@@ -41,11 +41,11 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     image = models.CharField(max_length=200)#models.ImageField(max_length=None, allow_empty_file=False, use_url=True)
 
-class Category(models.Model):
+class CategoryInfo(models.Model):
     category = models.CharField(max_length=200)
     subcategories = models.CharField(max_length=1000)
 
 class Favourite(models.Model):
-    user_id=models.CharField(max_length=200)
+    user_ID=models.CharField(max_length=200)
     product_id = models.CharField(max_length=1000)
 

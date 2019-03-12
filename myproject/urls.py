@@ -17,8 +17,10 @@ from django.contrib import admin
 from django.urls import path
 from api.views import AdDetail
 from api.views import FavouriteDetail
+from api.views import UserDetail
 from api.views import ProductFilterDetail
 from api.views import ProductSearch
+from api.views import CategoryDetail
 from api.resources import AdsResource
 from api.resources import UserResource
 from api.resources import CategoryResource
@@ -38,8 +40,8 @@ urlpatterns = [
     url(r'^api/favourite/get', FavouriteDetail.as_view()),
     url(r'^api/product/filter', ProductFilterDetail.as_view()),
     url(r'^api/product/find', ProductSearch.as_view()),
+    url(r'^api/user', UserDetail.as_view()),
+    url(r'^api/category', CategoryDetail.as_view()),
     url(r'^api/', include(ads_resource.urls)),
-    url(r'^api/', include(user_resource.urls)),
-    url(r'^api/', include(category_resource.urls)),
     url(r'^api/', include(favourite_resource.urls)),
 ]
