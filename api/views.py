@@ -121,8 +121,9 @@ class FavouriteDetail(generics.ListAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
-        pi = request.GET.get('pi')
-        fav = Favourite.objects.get(product_id=pi)
+        userid = request.GET.get('userid')
+        productid = request.GET.get('productid')
+        fav = Favourite.objects.get(product_id=productid,user_ID=userid)
         fav.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 

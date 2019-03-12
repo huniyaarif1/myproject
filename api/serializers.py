@@ -19,7 +19,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id','category', 'subcategories', 'city',
+        fields = ('product_id','category', 'subcategories', 'city',
                   'address', 'title', 'description', 'price', 'negotiable',
                   'new', 'used', 'contact', 'image')
     
@@ -27,7 +27,9 @@ class FavouriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Favourite
-        fields = ('id','user_ID','product_id')
+        fields = ('id','user_ID','product_id','category', 'subcategories', 'city',
+                  'address', 'title', 'description', 'price', 'negotiable',
+                  'new', 'used', 'contact', 'image')
 
 
 class UserSerializer(serializers.ModelSerializer):

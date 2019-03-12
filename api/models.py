@@ -28,6 +28,7 @@ class Ads(models.Model):
     image = models.CharField(max_length=200)#models.ImageField(max_length=None, allow_empty_file=False, use_url=True)
 
 class Product(models.Model):
+    product_id=models.CharField(max_length=1000, unique=True)
     category = models.CharField(max_length=200)
     subcategories = models.CharField(max_length=1000)
     city = models.CharField(max_length=200)
@@ -49,4 +50,16 @@ class CategoryInfo(models.Model):
 class Favourite(models.Model):
     user_ID=models.CharField(max_length=200)
     product_id=models.CharField(max_length=1000, unique=True)
+    category = models.CharField(max_length=200)
+    subcategories = models.CharField(max_length=1000)
+    city = models.CharField(max_length=200)
+    address = models.CharField(max_length=200)
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    price = models.IntegerField()
+    negotiable=models.BooleanField(default=False)
+    new=models.BooleanField(default=False)
+    used=models.BooleanField(default=False)
+    contact = models.IntegerField()
+    image = models.CharField(max_length=200)
 
