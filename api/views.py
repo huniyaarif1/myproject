@@ -40,20 +40,25 @@ class AdDetail(generics.ListAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-'''class AdDelete(generics.APIView):
+    def delete(self, request):
+        aid = request.GET.get('aid')
+        ad = Ads.objects.get(ad_ID=aid)
+        ad.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
-    queryset = Ads.objects.all()
-    serializer_class = AdSerializer
-
-    def get_queryset(self):
-        adid = self.request.query_params.get('ad', None)
-            instance = SomeModel.objects.get(user=ad)
-            instance.delete()
-            return Response({"message":"deleted successfuly"}, status=status.HTTP_200_OK)
-        except:
-            return Response({"message":"delete fail"}, status=status.HTTP_400_BAD_REQUEST)
-'''
-
+    def put(self, request):
+        aid = request.GET.get('aid')
+        ad = Ads.objects.get(ad_ID=aid)
+        serializer = AdSerializer(ad, data=request.data)
+        # validate and update
+        if serializer.is_valid():
+            serializer.save()
+            serializer_dict = serializer.data
+            serializer_dict["message"] = "Settings updated successfully."
+            return Response(serializer_dict, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
 
 class CategoryDetail(generics.ListAPIView):
     serializer_class = CategorySerializer

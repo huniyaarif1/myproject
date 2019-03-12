@@ -32,5 +32,4 @@ urlpatterns = [
     url(r'^api/product/find', ProductSearch.as_view()),
     url(r'^api/user', UserDetail.as_view()),
     url(r'^api/category', CategoryDetail.as_view()),
-    #url(r'^api/', include(ads_resource.urls)),
 ]
