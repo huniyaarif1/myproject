@@ -5,12 +5,13 @@ from django.db import models
 class UserData(models.Model):
     user_ID=models.CharField(max_length=200, unique=True)
     username=models.CharField(max_length=200)
-    email=models.CharField(max_length=200)
+    email=models.CharField(max_length=200, blank=True)
     usertype=models.CharField(max_length=20)
     loggedin=models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Ads(models.Model):
+    ad_ID=models.CharField(max_length=200)
     user_ID=models.CharField(max_length=200)
     category = models.CharField(max_length=200)
     subcategories = models.CharField(max_length=1000)
@@ -43,9 +44,9 @@ class Product(models.Model):
 
 class CategoryInfo(models.Model):
     category = models.CharField(max_length=200)
-    subcategories = models.CharField(max_length=1000)
+    subcategory = models.CharField(max_length=1000)
 
 class Favourite(models.Model):
     user_ID=models.CharField(max_length=200)
-    product_id = models.CharField(max_length=1000)
+    product_id=models.CharField(max_length=1000, unique=True)
 

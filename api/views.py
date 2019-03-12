@@ -13,7 +13,8 @@ from api.serializers import ProductSerializer
 from api.serializers import FavouriteSerializer
 from api.serializers import UserSerializer
 from rest_framework.permissions import AllowAny
-from rest_framework import status 
+from rest_framework import status
+from rest_framework.views import APIView
 
 # Create your views here.
 
@@ -38,6 +39,21 @@ class AdDetail(generics.ListAPIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+'''class AdDelete(generics.APIView):
+
+    queryset = Ads.objects.all()
+    serializer_class = AdSerializer
+
+    def get_queryset(self):
+        adid = self.request.query_params.get('ad', None)
+            instance = SomeModel.objects.get(user=ad)
+            instance.delete()
+            return Response({"message":"deleted successfuly"}, status=status.HTTP_200_OK)
+        except:
+            return Response({"message":"delete fail"}, status=status.HTTP_400_BAD_REQUEST)
+'''
+
 
 class CategoryDetail(generics.ListAPIView):
     serializer_class = CategorySerializer
@@ -98,6 +114,13 @@ class FavouriteDetail(generics.ListAPIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request):
+        pi = request.GET.get('pi')
+        fav = Favourite.objects.get(product_id=pi)
+        fav.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class ProductFilterDetail(generics.ListAPIView):
 

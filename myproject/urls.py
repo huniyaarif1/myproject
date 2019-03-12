@@ -21,27 +21,16 @@ from api.views import UserDetail
 from api.views import ProductFilterDetail
 from api.views import ProductSearch
 from api.views import CategoryDetail
-from api.resources import AdsResource
-from api.resources import UserResource
-from api.resources import CategoryResource
-from api.resources import ProductResource
-from api.resources import FavouriteResource
 from django.conf.urls import url, include
 
-ads_resource = AdsResource()
-category_resource = CategoryResource()
-user_resource = UserResource()
-product_resource = ProductResource()
-favourite_resource = FavouriteResource()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^api/ads/get', AdDetail.as_view()),
-    url(r'^api/favourite/get', FavouriteDetail.as_view()),
+    url(r'^api/ads', AdDetail.as_view()),
+    url(r'^api/favourite', FavouriteDetail.as_view()),
     url(r'^api/product/filter', ProductFilterDetail.as_view()),
     url(r'^api/product/find', ProductSearch.as_view()),
     url(r'^api/user', UserDetail.as_view()),
     url(r'^api/category', CategoryDetail.as_view()),
-    url(r'^api/', include(ads_resource.urls)),
-    url(r'^api/', include(favourite_resource.urls)),
+    #url(r'^api/', include(ads_resource.urls)),
 ]

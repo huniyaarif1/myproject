@@ -39,6 +39,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class CategorySerializer(serializers.ModelSerializer):
 
+    subcategories = serializers.ListField(child=serializers.CharField())
     class Meta:
         model = CategoryInfo
         fields = ('category','subcategories')
