@@ -22,12 +22,12 @@ class Ads(models.Model):
     negotiable=models.BooleanField(default=False)
     new=models.BooleanField(default=False)
     used=models.BooleanField(default=False)
-    contact = models.IntegerField()
+    contact = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
     image = models.CharField(max_length=200)#models.ImageField(max_length=None, allow_empty_file=False, use_url=True)
 
 class Product(models.Model):
-    product_id=models.CharField(max_length=1000, unique=True)
+    product_id=models.CharField(primary_key=True,max_length=100)
     category = models.CharField(max_length=200)
     subcategories = models.CharField(max_length=1000)
     city = models.CharField(max_length=200)
@@ -38,10 +38,15 @@ class Product(models.Model):
     negotiable=models.BooleanField(default=False)
     new=models.BooleanField(default=False)
     used=models.BooleanField(default=False)
-    contact = models.IntegerField()
+    addto_favourite=models.BooleanField(default=False)
+    contact = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
     image = models.CharField(max_length=200)#models.ImageField(max_length=None, allow_empty_file=False, use_url=True)
 
+class FavouriteInfo(models.Model):
+    product_id = models.ForeignKey(Product,null=True,related_name='products', to_field='product_id', on_delete = models.CASCADE)
+    user_ID=models.CharField(max_length=200)
+        
 class Item(models.Model):
     cID = models.CharField(primary_key=True, max_length= 50, null=False)
     category = models.CharField(max_length=50)
@@ -49,21 +54,6 @@ class Item(models.Model):
 
 class Category(models.Model):
     cID = models.ForeignKey(Item, related_name='subcategories', to_field='cID', on_delete = models.CASCADE)
-    subcategory = models.CharField(max_length=13)
+    subcategory = models.CharField(max_length=30)
 
-class Favourite(models.Model):
-    user_ID=models.CharField(max_length=200)
-    product_id=models.CharField(max_length=1000, unique=True)
-    category = models.CharField(max_length=200)
-    subcategories = models.CharField(max_length=1000)
-    city = models.CharField(max_length=200)
-    address = models.CharField(max_length=200)
-    title = models.CharField(max_length=200)
-    description = models.TextField()
-    price = models.IntegerField()
-    negotiable=models.BooleanField(default=False)
-    new=models.BooleanField(default=False)
-    used=models.BooleanField(default=False)
-    contact = models.IntegerField()
-    image = models.CharField(max_length=200)
 

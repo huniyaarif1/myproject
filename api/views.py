@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from api.models import Ads
 from api.models import Product
-from api.models import Favourite
+from api.models import FavouriteInfo
 from api.models import UserData
 from api.models import Category
 from api.models import Item
@@ -114,9 +114,10 @@ class UserDetail(generics.ListAPIView):
     
 class FavouriteDetail(generics.ListAPIView):
 
-    queryset = Favourite.objects.all()
+    queryset = FavouriteInfo.objects.all()
     serializer_class = FavouriteSerializer
-    
+
+   
     def get_queryset(self):
         """
         Optionally restricts the returned purchases to a given user,
@@ -126,12 +127,12 @@ class FavouriteDetail(generics.ListAPIView):
         if userid:
             queryset = self.queryset.filter(user_ID=userid)
         return queryset
-    
+
     def post(self,request):
         serializer = FavouriteSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            response_data={}
+            response_data=serializer.data
             response_data["success"] = "True"
             response_data["message"] = "Settings created successfully."
             return Response(response_data, status=status.HTTP_201_CREATED)
@@ -140,7 +141,7 @@ class FavouriteDetail(generics.ListAPIView):
     def delete(self, request):
         userid = request.GET.get('userid')
         productid = request.GET.get('productid')
-        fav = Favourite.objects.get(product_id=productid,user_ID=userid)
+        fav = FavouriteInfo.objects.get(product_id=productid,user_ID=userid)
         fav.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -164,6 +165,16 @@ class ProductFilterDetail(generics.ListAPIView):
             if scat:
                 queryset = queryset.filter(subcategories=scat)       
         return queryset
+
+    def post(self,request):
+        serializer = ProductSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            response_data={}
+            response_data["success"] = "True"
+            response_data["message"] = "Settings created successfully."
+            return Response(response_data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
 class ProductSearch(generics.ListAPIView):

@@ -2,7 +2,7 @@
 
 from api.models import Ads
 from api.models import Product
-from api.models import Favourite
+from api.models import FavouriteInfo
 from api.models import UserData
 from api.models import Category
 from api.models import Item
@@ -17,7 +17,7 @@ class AdSerializer(serializers.ModelSerializer):
 
         
 class ProductSerializer(serializers.ModelSerializer):
-
+    
     class Meta:
         model = Product
         fields = ('product_id','category', 'subcategories', 'city',
@@ -25,12 +25,15 @@ class ProductSerializer(serializers.ModelSerializer):
                   'new', 'used', 'contact', 'image')
     
 class FavouriteSerializer(serializers.ModelSerializer):
-
+    products = ProductSerializer(read_only=True,many=True)
+    
     class Meta:
-        model = Favourite
-        fields = ('id','user_ID','product_id','category', 'subcategories', 'city',
-                  'address', 'title', 'description', 'price', 'negotiable',
-                  'new', 'used', 'contact', 'image')
+        model = FavouriteInfo
+        depth=1
+        fields = ('user_ID','product_id', 'products',)
+        
+    def get_members(self, obj):
+        return [fs.product_id for fs in obj.products.all()]
 
 class UserSerializer(serializers.ModelSerializer):
 
