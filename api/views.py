@@ -47,13 +47,13 @@ class AdDetail(generics.ListAPIView):
 
     def delete(self, request):
         aid = request.GET.get('aid')
-        ad = Ads.objects.get(ad_ID=aid)
+        ad = Ads.objects.get(id=aid)
         ad.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def put(self, request):
         aid = request.GET.get('aid')
-        ad = Ads.objects.get(ad_ID=aid)
+        ad = Ads.objects.get(id=aid)
         serializer = AdSerializer(ad, data=request.data)
         # validate and update
         if serializer.is_valid():

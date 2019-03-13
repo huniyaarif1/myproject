@@ -11,7 +11,7 @@ from rest_framework import serializers
 class AdSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ads
-        fields = ('ad_ID','user_ID','category', 'subcategories', 'city',
+        fields = ('id','user_ID','category', 'subcategories', 'city',
                   'address', 'title', 'description', 'price', 'negotiable',
                   'new', 'used', 'contact', 'image')
 
@@ -48,7 +48,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = ('cID', 'image','category','subcategories')
+        fields = ('image','category','subcategories')
 
     def create(self, validated_data):
         category_data = validated_data.pop('subcategories')

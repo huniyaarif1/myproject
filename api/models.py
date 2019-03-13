@@ -11,7 +11,6 @@ class UserData(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Ads(models.Model):
-    ad_ID=models.CharField(max_length=200, unique=True)
     user_ID=models.CharField(max_length=200)
     category = models.CharField(max_length=200)
     subcategories = models.CharField(max_length=1000)
