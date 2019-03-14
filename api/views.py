@@ -17,6 +17,8 @@ from api.serializers import UserSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework import status
 from rest_framework.views import APIView
+import base64
+from django.core.files.base import ContentFile
 
 # Create your views here.
 
@@ -132,7 +134,7 @@ class FavouriteDetail(generics.ListAPIView):
         serializer = FavouriteSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            response_data=serializer.data
+            response_data={}
             response_data["success"] = "True"
             response_data["message"] = "Settings created successfully."
             return Response(response_data, status=status.HTTP_201_CREATED)
