@@ -69,7 +69,7 @@ class AdSerializer(serializers.ModelSerializer):
     adimages = AdImageSerializer(many=True)
     class Meta:
         model = Ads
-        fields = ('user_ID','category', 'subcategories', 'city',
+        fields = ('id','user_ID','category', 'subcategories', 'city',
                   'address', 'title', 'description', 'price', 'negotiable',
                   'new', 'used', 'contact', 'adimages')
     def create(self, validated_data):
