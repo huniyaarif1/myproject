@@ -1,6 +1,7 @@
 # api/serializers.py
 
 from api.models import Ads
+from api.models import AdImage
 from api.models import Product
 from api.models import FavouriteInfo
 from api.models import UserData
@@ -57,15 +58,26 @@ class Base64ImageField(serializers.ImageField):
         extension = "jpg" if extension == "jpeg" else extension
 
         return extension
+
+class AdImageSerializer(serializers.ModelSerializer):
+    images=Base64ImageField(max_length=None, use_url=True)
+    class Meta:
+        model = AdImage
+        fields = ('images',)
     
 class AdSerializer(serializers.ModelSerializer):
-    image=Base64ImageField(max_length=None, use_url=True)
+    adimages = AdImageSerializer(many=True)
     class Meta:
         model = Ads
-        fields = ('id','user_ID','category', 'subcategories', 'city',
+        fields = ('user_ID','category', 'subcategories', 'city',
                   'address', 'title', 'description', 'price', 'negotiable',
-                  'new', 'used', 'contact', 'image')
-
+                  'new', 'used', 'contact', 'adimages')
+    def create(self, validated_data):
+        images_data = validated_data.pop('adimages')
+        imageID = Ads.objects.create(**validated_data)
+        for image_data in images_data:
+            AdImage.objects.create(imageID=imageID, **image_data)
+        return imageID
 
         
 class ProductSerializer(serializers.ModelSerializer):

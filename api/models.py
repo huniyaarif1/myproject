@@ -24,7 +24,11 @@ class Ads(models.Model):
     used=models.BooleanField(default=False)
     contact = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
-    image=models.ImageField(upload_to = 'static', default = 'static/education_category.png')#models.ImageField(max_length=None, allow_empty_file=False, use_url=True)
+    imageID=models.CharField(primary_key=True, max_length= 50, null=False)
+    
+class AdImage(models.Model):
+    imageID = models.ForeignKey(Ads, related_name='adimages', to_field='imageID', on_delete = models.CASCADE)
+    images = models.ImageField(upload_to = 'myproject/static', default = 'myproject/static/education_category.png')#models.ImageField(max_length=None, allow_empty_file=False, use_url=True)
 
 class Product(models.Model):
     pID = models.CharField(primary_key=True, max_length= 50, null=False)
