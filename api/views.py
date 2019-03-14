@@ -143,7 +143,7 @@ class FavouriteDetail(generics.ListAPIView):
     def delete(self, request):
         userid = request.GET.get('userid')
         productid = request.GET.get('productid')
-        fav = FavouriteInfo.objects.get(product_id=productid,user_ID=userid)
+        fav = FavouriteInfo.objects.get(productid=productid,user_ID=userid)
         fav.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 

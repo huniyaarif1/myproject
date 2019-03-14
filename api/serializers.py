@@ -78,23 +78,29 @@ class AdSerializer(serializers.ModelSerializer):
         for image_data in images_data:
             AdImage.objects.create(imageID=imageID, **image_data)
         return imageID
-
-        
-class ProductSerializer(serializers.ModelSerializer):
-  
-    class Meta:
-        model = Product
-        fields = ('title', 'description','category', 'subcategories', 'city',
-                  'address', 'price', 'negotiable',
-                  'new', 'used', 'addto_favourite','contact', 'image')
     
 class FavouriteSerializer(serializers.ModelSerializer):
-    fav_products = ProductSerializer(read_only=True,many=True)
     
     class Meta:
         model = FavouriteInfo
         depth=1
-        fields = ('product_id','user_ID','fav_products',)
+        fields = ('productid','user_ID',)
+
+class ProductSerializer(serializers.ModelSerializer):
+    fav_products = FavouriteSerializer(many=True)
+    class Meta:
+        model = Product
+        fields = ('id','product_id','title', 'description','category', 'subcategories', 'city',
+                  'address', 'price', 'negotiable',
+                  'new', 'used','contact', 'addto_favourite', 'image', 'fav_products')
+
+    def create(self, validated_data):
+        fav_data = validated_data.pop('fav_products')
+        favID = Product.objects.create(**validated_data)
+        for f_data in fav_data:
+            FavouriteInfo.objects.create(favID=favID, **f_data)
+        return favID
+        
 
 class UserSerializer(serializers.ModelSerializer):
 
