@@ -27,10 +27,10 @@ class Product(models.Model):
     contact = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
     image_one = models.ImageField(upload_to = 'myproject/static', default = '')
-    image_two = models.ImageField(blank=True,upload_to = 'myproject/static', default = '')
-    image_three = models.ImageField(blank=True,upload_to = 'myproject/static', default = '')
-    image_four = models.ImageField(blank=True,upload_to = 'myproject/static', default = '')
-    image_five = models.ImageField(blank=True,upload_to = 'myproject/static', default = '')
+    image_two = models.ImageField(blank=True,null=True,upload_to = 'myproject/static', default = '')
+    image_three = models.ImageField(blank=True,null=True,upload_to = 'myproject/static', default = '')
+    image_four = models.ImageField(blank=True,null=True,upload_to = 'myproject/static', default = '')
+    image_five = models.ImageField(blank=True, null=True,upload_to = 'myproject/static', default = '')
 
 
 class FavouriteInfo(models.Model):

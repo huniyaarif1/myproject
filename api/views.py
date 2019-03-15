@@ -125,13 +125,14 @@ class FavouriteDetail(generics.ListAPIView):
         """        
         userid = self.request.query_params.get('userid', None)
         if userid:
-            queryset = self.queryset.filter(user_ID=userid)
+            queryset = self.queryset.filter(user_id=userid)
         return queryset
 
     def post(self,request):
         userid = request.GET.get('userid')
         productid = request.GET.get('productid')
         FavouriteInfo.objects.filter(productid=productid).update(user_id=userid)
+        Product.objects.filter(product_id=productid).update(addto_favourite=True)
         response_data={}
         response_data["success"] = "True"
         response_data["message"] = "Settings created successfully."

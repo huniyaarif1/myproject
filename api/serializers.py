@@ -67,11 +67,12 @@ class FavouriteSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     fav_products = FavouriteSerializer(many=True)
+    
     image_one=Base64ImageField(max_length=None, use_url=True)
-    image_two=Base64ImageField(max_length=None, use_url=True)
-    image_three=Base64ImageField(max_length=None, use_url=True)
-    image_four=Base64ImageField(max_length=None, use_url=True)
-    image_five=Base64ImageField(max_length=None, use_url=True)
+    image_two=Base64ImageField(required=False,max_length=None, use_url=True)
+    image_three=Base64ImageField(required=False,max_length=None, use_url=True)
+    image_four=Base64ImageField(required=False,max_length=None, use_url=True)
+    image_five=Base64ImageField(required=False,max_length=None, use_url=True)
     
     class Meta:
         model = Product
@@ -85,6 +86,14 @@ class ProductSerializer(serializers.ModelSerializer):
         for f_data in fav_data:
             FavouriteInfo.objects.create(favID=favID, **f_data)
         return favID
+
+    def update(self, instance, validated_data):
+        fav_data = validated_data.pop('fav_products')
+        Product.objects.filter(product_id=instance.product_id).update(**validated_data)
+        for f_data in fav_data:
+             FavouriteInfo.objects.filter(productid=instance.product_id).update(**f_data)
+        return instance
+        
 
 
 class UserSerializer(serializers.ModelSerializer):
