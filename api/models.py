@@ -30,7 +30,7 @@ class AdImage(models.Model):
     images = models.ImageField(upload_to = 'myproject/static', default = 'myproject/static/education_category.png')#models.ImageField(max_length=None, allow_empty_file=False, use_url=True)
     
 class Product(models.Model):
-    product_id = models.CharField(max_length= 50, null=False)
+    product_id = models.CharField(unique=True,max_length= 50, null=False)
     title=models.CharField(max_length=100)
     category = models.CharField(max_length=200)
     subcategories = models.CharField(max_length=1000)
