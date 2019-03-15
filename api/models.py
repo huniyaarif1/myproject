@@ -10,12 +10,9 @@ class UserData(models.Model):
     loggedin=models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
-class Ads(models.Model):
-    user_ID=models.CharField(max_length=200)
-
 class Product(models.Model):
-    pID = models.ForeignKey(Ads, related_name='products', on_delete = models.CASCADE)
     product_id = models.CharField(unique=True,max_length= 50, null=False)
+    user_ID=models.CharField(max_length=200)
     title=models.CharField(max_length=100)
     category = models.CharField(max_length=200)
     subcategories = models.CharField(max_length=1000)

@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from api.models import Ads
 from api.models import Product
 from api.models import FavouriteInfo
 from api.models import UserData
@@ -8,7 +7,6 @@ from api.models import Item
 from rest_framework import generics
 from rest_framework import filters
 from rest_framework.response import Response
-from api.serializers import AdSerializer
 from api.serializers import ItemSerializer
 from api.serializers import CategorySerializer
 from api.serializers import ProductSerializer
@@ -24,8 +22,8 @@ from django.core.files.base import ContentFile
 
 class AdDetail(generics.ListAPIView):
 
-    queryset = Ads.objects.all()
-    serializer_class = AdSerializer
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
     
     def get_queryset(self):
         """
@@ -38,7 +36,7 @@ class AdDetail(generics.ListAPIView):
         return queryset
     
     def post(self,request):
-        serializer = AdSerializer(data=request.data)
+        serializer = ProductSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             response_data={}
@@ -49,14 +47,14 @@ class AdDetail(generics.ListAPIView):
 
     def delete(self, request):
         aid = request.GET.get('aid')
-        ad = Ads.objects.get(id=aid)
+        ad = Product.objects.get(id=aid)
         ad.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def put(self, request):
         aid = request.GET.get('aid')
-        ad = Ads.objects.get(id=aid)
-        serializer = AdSerializer(ad, data=request.data)
+        ad = Product.objects.get(id=aid)
+        serializer = ProductSerializer(ad, data=request.data)
         # validate and update
         if serializer.is_valid():
             serializer.save()
@@ -168,16 +166,6 @@ class ProductFilterDetail(generics.ListAPIView):
                 queryset = queryset.filter(subcategories=scat)       
         return queryset
 
-    def post(self,request):
-        serializer = ProductSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            response_data={}
-            response_data["success"] = "True"
-            response_data["message"] = "Settings created successfully."
-            return Response(response_data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
 
 class ProductSearch(generics.ListAPIView):
     

@@ -26,7 +26,7 @@ from django.conf.urls import url, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^api/ads', AdDetail.as_view()),
+    url(r'^api/product/ad', AdDetail.as_view()),
     url(r'^api/favourite', FavouriteDetail.as_view()),
     url(r'^api/product/filter', ProductFilterDetail.as_view()),
     url(r'^api/product/find', ProductSearch.as_view()),

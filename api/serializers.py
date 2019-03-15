@@ -1,6 +1,5 @@
 # api/serializers.py
 
-from api.models import Ads
 from api.models import Product
 from api.models import FavouriteInfo
 from api.models import UserData
@@ -73,9 +72,10 @@ class ProductSerializer(serializers.ModelSerializer):
     image_three=Base64ImageField(max_length=None, use_url=True)
     image_four=Base64ImageField(max_length=None, use_url=True)
     image_five=Base64ImageField(max_length=None, use_url=True)
+    
     class Meta:
         model = Product
-        fields = ('id','product_id','title', 'description','category', 'subcategories', 'city',
+        fields = ('id','product_id','user_ID','title', 'description','category', 'subcategories', 'city',
                   'address', 'price', 'negotiable',
                   'new', 'used','contact', 'image_one','image_two','image_three', 'image_four','image_five','addto_favourite','fav_products')
 
@@ -86,18 +86,6 @@ class ProductSerializer(serializers.ModelSerializer):
             FavouriteInfo.objects.create(favID=favID, **f_data)
         return favID
 
-class AdSerializer(serializers.ModelSerializer):
-    products = ProductSerializer(many=True)
-    class Meta:
-        model = Ads
-        fields = ('id','user_ID','products')
-        
-    def create(self, validated_data):
-        products_data = validated_data.pop('products')
-        pID = Product.objects.create(**validated_data)
-        for product_data in product_data:
-            FavouriteInfo.objects.create(pID=pID, **product_data)
-        return pID
 
 class UserSerializer(serializers.ModelSerializer):
 
