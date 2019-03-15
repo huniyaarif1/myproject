@@ -133,7 +133,7 @@ class FavouriteDetail(generics.ListAPIView):
     def post(self,request):
         userid = request.GET.get('userid')
         productid = request.GET.get('productid')
-        FavouriteInfo.objects.filter(productid=productid).update(user_ID=userid)
+        FavouriteInfo.objects.filter(productid=productid).update(user_id=userid)
         response_data={}
         response_data["success"] = "True"
         response_data["message"] = "Settings created successfully."
@@ -143,7 +143,7 @@ class FavouriteDetail(generics.ListAPIView):
         userid = request.GET.get('userid')
         productid = request.GET.get('productid')
         Product.objects.filter(product_id=productid).update(addto_favourite=False)
-        FavouriteInfo.objects.filter(productid=productid,user_ID=userid).update(user_ID="")
+        FavouriteInfo.objects.filter(productid=productid,user_id=userid).update(user_id="")
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 

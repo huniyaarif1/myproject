@@ -12,24 +12,9 @@ class UserData(models.Model):
 
 class Ads(models.Model):
     user_ID=models.CharField(max_length=200)
-    category = models.CharField(max_length=200)
-    subcategories = models.CharField(max_length=1000)
-    city = models.CharField(max_length=200)
-    address = models.CharField(max_length=200)
-    title = models.CharField(max_length=200)
-    description = models.TextField()
-    price = models.IntegerField()
-    negotiable=models.BooleanField(default=False)
-    new=models.BooleanField(default=False)
-    used=models.BooleanField(default=False)
-    contact = models.CharField(max_length=200)
-    created_at = models.DateTimeField(auto_now_add=True)
-    
-class AdImage(models.Model):
-    imageID = models.ForeignKey(Ads, related_name='adimages', on_delete = models.CASCADE)
-    images = models.ImageField(upload_to = 'myproject/static', default = 'myproject/static/education_category.png')#models.ImageField(max_length=None, allow_empty_file=False, use_url=True)
-    
+
 class Product(models.Model):
+    pID = models.ForeignKey(Ads, related_name='products', on_delete = models.CASCADE)
     product_id = models.CharField(unique=True,max_length= 50, null=False)
     title=models.CharField(max_length=100)
     category = models.CharField(max_length=200)
@@ -44,11 +29,16 @@ class Product(models.Model):
     addto_favourite=models.BooleanField(default=False)
     contact = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
-    image=models.CharField(max_length=200)
+    image_one = models.ImageField(upload_to = 'myproject/static', default = '')
+    image_two = models.ImageField(blank=True,upload_to = 'myproject/static', default = '')
+    image_three = models.ImageField(blank=True,upload_to = 'myproject/static', default = '')
+    image_four = models.ImageField(blank=True,upload_to = 'myproject/static', default = '')
+    image_five = models.ImageField(blank=True,upload_to = 'myproject/static', default = '')
+
 
 class FavouriteInfo(models.Model):
     favID = models.ForeignKey(Product, related_name='fav_products', on_delete = models.CASCADE)
-    user_ID=models.CharField(max_length=200, blank=True)
+    user_id=models.CharField(max_length=200, blank=True)
     productid=models.CharField(max_length=200)
             
 class Item(models.Model):
