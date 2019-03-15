@@ -39,12 +39,11 @@ class FavouriteInfo(models.Model):
     productid=models.CharField(max_length=200)
             
 class Item(models.Model):
-    cID = models.CharField(primary_key=True, max_length= 50, null=False)
     category = models.CharField(max_length=50)
     image=models.URLField(max_length=250)
 
 class Category(models.Model):
-    cID = models.ForeignKey(Item, related_name='subcategories', to_field='cID', on_delete = models.CASCADE)
+    cID = models.ForeignKey(Item, related_name='subcategories', on_delete = models.CASCADE)
     subcategory = models.CharField(max_length=30)
 
 
