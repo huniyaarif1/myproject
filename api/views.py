@@ -131,20 +131,20 @@ class FavouriteDetail(generics.ListAPIView):
         return queryset
 
     def post(self,request):
-        serializer = FavouriteSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            response_data={}
-            response_data["success"] = "True"
-            response_data["message"] = "Settings created successfully."
-            return Response(response_data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+        userid = request.GET.get('userid')
+        productid = request.GET.get('productid')
+        FavouriteInfo.objects.filter(productid=productid).update(user_ID=userid)
+        response_data={}
+        response_data["success"] = "True"
+        response_data["message"] = "Settings created successfully."
+        return Response(response_data, status=status.HTTP_201_CREATED)
+        
     def delete(self, request):
         userid = request.GET.get('userid')
         productid = request.GET.get('productid')
-        fav = FavouriteInfo.objects.get(productid=productid,user_ID=userid)
-        fav.delete()
+        Product.objects.filter(product_id=productid).update(addto_favourite=False)
+        FavouriteInfo.objects.filter(productid=productid,user_ID=userid).update(user_ID="")
+
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 

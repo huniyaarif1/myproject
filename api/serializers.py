@@ -92,7 +92,7 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ('id','product_id','title', 'description','category', 'subcategories', 'city',
                   'address', 'price', 'negotiable',
-                  'new', 'used','contact', 'addto_favourite', 'image', 'fav_products')
+                  'new', 'used','contact', 'image', 'addto_favourite','fav_products')
 
     def create(self, validated_data):
         fav_data = validated_data.pop('fav_products')

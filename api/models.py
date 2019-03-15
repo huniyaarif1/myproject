@@ -41,10 +41,10 @@ class Product(models.Model):
     negotiable=models.BooleanField(default=False)
     new=models.BooleanField(default=False)
     used=models.BooleanField(default=False)
+    addto_favourite=models.BooleanField(default=False)
     contact = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
     image=models.CharField(max_length=200)
-    addto_favourite=models.BooleanField(default=False)
 
 class FavouriteInfo(models.Model):
     favID = models.ForeignKey(Product, related_name='fav_products', on_delete = models.CASCADE)
